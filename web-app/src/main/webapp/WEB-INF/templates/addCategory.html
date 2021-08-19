@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add category</title>
+</head>
+<body>
+<header>
+    <h1>Add category</h1>
+</header>
+<section id="category">
+    <form action="categories.html"
+          id="addCategoryForm"
+          th:action="@{${#httpServletRequest.servletPath}}"
+          th:method="@{post}"
+          th:object="${category}">
+        <p><label>Category name</label></p>
+        <input th:field="*{categoryName}" size="50" type="text">
+        <br>
+        <br>
+        <a href="categories.html">Cancel</a>
+        <a href="categories.html" th:href="@{/categories}"
+           th:onclick="@{document.forms['addCategoryForm'].submit(); return false;}">Save</a>
+    </form>
+</section>
+<footer>
+
+</footer>
+</body>
+</html>

@@ -1,0 +1,6 @@
+# Project exclude paths
+/model/target/
+/repository/target/
+/service/target/
+/test-database/target/
+/web-app/target/

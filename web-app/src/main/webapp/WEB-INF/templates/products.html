@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+</head>
+<body>
+<header>
+    <h1>Products</h1>
+</header>
+<br>
+<a href="categories.html">List of categories</a>
+<br>
+<br>
+<section>
+    <table align="center" border="1">
+        <thead>
+        <tr>
+            <th bgcolor="#778899" height="25" width="650">Product name</th>
+            <th bgcolor="#778899" height="25" width="650">Category name</th>
+            <th bgcolor="#778899" height="25" width="80">Price</th>
+            <th bgcolor="#778899" height="25" width="250"><a href="addProduct.html" hidden>Add product</a></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.productName}" height="25">Football ball</td>
+            <td th:text="${product.categoryName}" height="25">Sports products</td>
+            <td th:text="${product.productPrice}" align="center" height="25">800</td>
+            <td align="center" height="25">
+                <a href="editProduct.html" th:href="@{|/editProduct/${product.productId}|}">Edit</a>
+                &nbsp &nbsp
+                <a href="product.html" th:href="@{|/products/${product.productId}|}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+<footer>
+    <hr>
+    <p align="center">Categories of products 2021</p>
+</footer>
+</body>
+</html>

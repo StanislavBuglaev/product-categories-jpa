@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add product</title>
+</head>
+<body>
+<header>
+    <h1>Add product</h1>
+</header>
+<section  id="product">
+    <form action="products.html"
+          id="addProductForm"
+          th:action="@{${#httpServletRequest.servletPath}}"
+          th:method="@{post}"
+          th:object="${product}">
+
+        <p><label>Product name</label></p>
+        <input th:field="*{productName}" size="50" type="text">
+        <br>
+        <!--<p><label>Category id</label></p>
+        <input th:name="categoryId" th:type="text" th:value="${categoryId}"  size="50" type="text" disabled>
+        <br>-->
+        <p><label>Price</label></p>
+        <input th:field="*{productPrice}" size="50" type="text">
+        <br>
+        <br>
+        <a href="products.html">Cancel</a>
+        <a href="products.html" th:href="@{/products}"
+           th:onclick="@{document.forms['addProductForm'].submit(); return false;}">Save</a>
+    </form>
+</section>
+<footer>
+
+</footer>
+</body>
+</html>
