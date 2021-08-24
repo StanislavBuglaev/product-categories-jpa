@@ -14,19 +14,16 @@
           th:action="@{${#httpServletRequest.servletPath}}"
           th:method="@{post}"
           th:object="${product}">
-
+        <input th:name="productId" th:type="text" th:value="${productId}"  size="50" type="text" hidden>
         <p><label>Product name</label></p>
         <input th:field="*{productName}" size="50" type="text">
         <br>
-        <!--<p><label>Category id</label></p>
-        <input th:name="categoryId" th:type="text" th:value="${categoryId}"  size="50" type="text" disabled>
-        <br>-->
         <p><label>Price</label></p>
         <input th:field="*{productPrice}" size="50" type="text">
         <br>
         <br>
-        <a href="products.html">Cancel</a>
-        <a href="products.html" th:href="@{/products}"
+        <a href="products">Cancel</a>
+        <a href="products" th:href="@{/products}"
            th:onclick="@{document.forms['addProductForm'].submit(); return false;}">Save</a>
     </form>
 </section>

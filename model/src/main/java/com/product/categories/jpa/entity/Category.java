@@ -19,11 +19,14 @@ public class Category {
     @Column(name = "products_count")
     private Integer productsCount;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_categoryId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     List<Product> products;
 
     public Category() {
+    }
+
+    public Category(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Integer getCategoryId() {

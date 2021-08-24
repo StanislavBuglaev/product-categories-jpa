@@ -18,8 +18,8 @@
         <input th:field="*{categoryName}" size="50" type="text">
         <br>
         <br>
-        <a href="categories.html">Cancel</a>
-        <a href="categories.html" th:href="@{/categories}"
+        <a href="categories">Cancel</a>
+        <a href="categories" th:href="@{/categories}"
            th:onclick="@{document.forms['addCategoryForm'].submit(); return false;}">Save</a>
     </form>
 </section>

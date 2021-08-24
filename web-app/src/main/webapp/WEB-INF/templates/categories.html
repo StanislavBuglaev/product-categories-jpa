@@ -9,7 +9,7 @@
     <h1>Categories of products</h1>
 </header>
 <br>
-<a href="products.html">List of products</a>
+<a href="products">List of products</a>
 <br>
 <br>
 <section>
@@ -18,13 +18,13 @@
         <tr>
             <th bgcolor="#778899" height="25" width="650">Category name</th>
             <th bgcolor="#778899" height="25" width="80">Quantity of goods</th>
-            <th bgcolor="#778899" height="25" width="250"><a href="addCategory.html">Add category</a></th>
+            <th bgcolor="#778899" height="25" width="250"><a href="addCategory">Add category</a></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="category : ${categories}">
             <td th:text="${category.categoryName}" height="25">Zoo products</td>
-            <td th:text="${category.quantityOfGoods}" align="center" height="25">2</td><!--- ???????????? count() column-->
+            <td th:text="${category.productsCount}" align="center" height="25">2</td><!--- ???????????? count() column-->
             <td align="center" height="25">
                 <br>
                 <a href="editCategory.html" th:href="@{|/editCategory/${category.categoryId}|}">Edit</a>

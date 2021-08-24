@@ -9,7 +9,7 @@
     <h1>Products</h1>
 </header>
 <br>
-<a href="categories.html">List of categories</a>
+<a href="categories">List of categories</a>
 <br>
 <br>
 <section>
@@ -25,7 +25,7 @@
         <tbody>
         <tr th:each="product : ${products}">
             <td th:text="${product.productName}" height="25">Football ball</td>
-            <td th:text="${product.categoryName}" height="25">Sports products</td>
+            <td th:text="${product.category.categoryName}" height="25">Sports products</td>
             <td th:text="${product.productPrice}" align="center" height="25">800</td>
             <td align="center" height="25">
                 <a href="editProduct.html" th:href="@{|/editProduct/${product.productId}|}">Edit</a>

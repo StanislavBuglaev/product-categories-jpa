@@ -1,18 +1,42 @@
 package com.product.categories.jpa.service;
 
 import com.product.categories.jpa.entity.Category;
+import com.product.categories.jpa.repository.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
-public interface CategoryService {
+@Service
+public class CategoryService {
 
-    List<Category> findAll();
+    private final CategoryRepository categoryRepository;
 
-    Optional<Category> findById(Integer categoryId);
+    @Autowired
+    public CategoryService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
-    Category create(Category category);
+    public List<Category> findAll() {
+        return categoryRepository.findAll();
+    }
 
-    Category update(Integer categoryId);
+    public Optional<Category> findById(Integer categoryId) {
+        return categoryRepository.findById(categoryId);
+    }
 
-    void delete(Integer categoryId);
+
+    public Category create(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    public Category update(Integer categoryId) {
+        return categoryRepository.findById(categoryId).get();
+    }
+
+    public void delete(Integer categoryId) {
+         categoryRepository.deleteById(categoryId);
+    }
+
 }

@@ -1,20 +1,51 @@
 package com.product.categories.jpa.service;
 
-import com.product.categories.jpa.entity.Category;
 import com.product.categories.jpa.entity.Product;
+import com.product.categories.jpa.repository.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductService {
+@Service
+public class ProductService {
 
-    List<Product> findAll();
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
 
-    Optional<Product> findById(Integer productId);
+    private final ProductRepository productRepository;
 
-    Product create(Product product);
+    @Autowired
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
-    Product update(Integer productId);
 
-    void delete(Integer productId);
+    public List<Product> findAll() {
+
+        LOGGER.trace("findAll()");
+        return productRepository.findAll();
+    }
+
+    public Optional<Product> findById(Integer productId) {
+        LOGGER.debug("findById(id:{})", productId);
+        return productRepository.findById(productId);
+    }
+
+    public Product create(Product product) {
+        LOGGER.debug("create(product:{})", product);
+        return productRepository.save(product);
+    }
+
+    public Product update(Integer productId) {
+        LOGGER.debug("update(product:{})", productId);
+        return productRepository.findById(productId).get();
+    }
+
+    public void delete(Integer productId) {
+        LOGGER.debug("delete(productId:{})", productId);
+        productRepository.deleteById(productId);
+    }
 }

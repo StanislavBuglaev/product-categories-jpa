@@ -2,6 +2,7 @@ package com.product.categories.jpa.entity;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "products")
 public class Product {
@@ -14,11 +15,13 @@ public class Product {
     @Column(name = "product_name")
     private String productName;
 
-    @Column(name = "category_name")
-    private String categoryName;
-
     @Column(name = "product_price")
     private Double productPrice;
+
+    @ManyToOne()
+    @JoinColumn(name = "category_id")
+    Category category;
+
 
     public Product() {
     }
@@ -39,14 +42,6 @@ public class Product {
         this.productName = productName;
     }
 
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
     public Double getProductPrice() {
         return productPrice;
     }
@@ -55,13 +50,21 @@ public class Product {
         this.productPrice = productPrice;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "productId=" + productId +
                 ", productName='" + productName + '\'' +
-                ", categoryName='" + categoryName + '\'' +
                 ", productPrice=" + productPrice +
+                ", category=" + category +
                 '}';
     }
 }

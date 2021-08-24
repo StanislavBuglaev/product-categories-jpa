@@ -5,7 +5,9 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:repository="http://www.springframework.org/schema/data/repository"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/jdbc
+       http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
         http://www.springframework.org/schema/data/jpa
@@ -20,10 +22,12 @@
         <property name="url" value="jdbc:h2:mem:test_db;MODE=MySQL;DB_CLOSE_DELAY=-1"/>
         <property name="username" value="sa"/>
         <property name="password" value=""/>
-        <property name="hibernate.show_sql" value="true" />
-        <property name="hibernate.format_sql" value="true" />
     </bean>
 
+    <!--<jdbc:initialize-database>
+     &lt;!&ndash;   <jdbc:script location="classpath*:create-db.sql"/>&ndash;&gt;
+        <jdbc:script location="classpath*:insert-db.sql"/>
+    </jdbc:initialize-database>-->
 
     <!--   -->
 
@@ -54,10 +58,5 @@
     <tx:annotation-driven/>
 
     <jpa:repositories base-package="com.product.categories.jpa.repository"/>
-
-    <jdbc:initialize-database>
-        <jdbc:script location="classpath*:create-db.sql"/>
-        <jdbc:script location="classpath*:insert-db.sql"/>
-    </jdbc:initialize-database>
 
 </beans>
