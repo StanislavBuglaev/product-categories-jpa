@@ -3,6 +3,8 @@ package com.product.categories.jpa.web_app;
 
 import com.product.categories.jpa.entity.Category;
 import com.product.categories.jpa.service.CategoryService;
+import com.product.categories.jpa.service.rest.CategoryServiceRest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
+    @Autowired
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
@@ -57,14 +60,13 @@ public class CategoryController {
     }
 
     @PostMapping(value = "/editCategory/{id}")
-    public final String updateCategory(Integer categoryId, Category category) {
-            categoryService.update(categoryId);
+    public final String updateCategory(Category category) {
             categoryService.create(category);
             return "redirect:/categories";
         }
 
     @GetMapping(value = "/categories/{id}")
-    public final String deleteCategoryById(@PathVariable Integer id, Model model) {
+    public final String deleteCategoryById(@PathVariable Integer id) {
         categoryService.delete(id);
         return "redirect:/categories";
     }

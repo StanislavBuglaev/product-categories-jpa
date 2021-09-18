@@ -9,10 +9,17 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
+    /*@Query(value = "select products.product_id, products.product_name, categories.category_name, products.product_price, products.category_id " +
+            "from products inner join categories on products.Z = categories.category_id group by products.product_id;",
+            nativeQuery = true)
+    List<Product> findAll();
+*/
+
     @Query(value = "select products.product_id, products.product_name, categories.category_name, products.product_price, products.category_id " +
             "from products inner join categories on products.category_id = categories.category_id group by products.product_id;",
             nativeQuery = true)
     List<Product> findAll();
+
 }
 
 

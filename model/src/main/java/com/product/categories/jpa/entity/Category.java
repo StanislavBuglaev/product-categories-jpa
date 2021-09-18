@@ -1,6 +1,8 @@
 package com.product.categories.jpa.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -19,7 +21,8 @@ public class Category {
     @Column(name = "products_count")
     private Integer productsCount;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category", fetch = FetchType.LAZY)
+    @JsonIgnore
     List<Product> products;
 
     public Category() {

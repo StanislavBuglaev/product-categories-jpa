@@ -3,6 +3,7 @@ package com.product.categories.jpa.web_app;
 import com.product.categories.jpa.entity.Category;
 import com.product.categories.jpa.entity.Product;
 import com.product.categories.jpa.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +17,13 @@ public class ProductController {
 
     private final ProductService productService;
 
-
+    @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
     @GetMapping(value = "/products")
-    public final String products(Model model){
+    public final String products(Model model) {
         model.addAttribute("products", productService.findAll());
         return "products";
     }
@@ -38,29 +39,29 @@ public class ProductController {
 
     @PostMapping(value = "/addProduct/{categoryId}")
     public String addProduct(Product product, @PathVariable("categoryId") Integer categoryId) {
-            product.setCategory(new Category(categoryId));
-            productService.create(product);
-            return "redirect:/categories";
-        }
+        product.setCategory(new Category(categoryId));
+        productService.create(product);
+        return "redirect:/categories";
+    }
 
     @GetMapping(value = "/editProduct/{id}")
-    public final String gotoEditProductPage(@PathVariable Integer id, Model model){
+    public final String gotoEditProductPage(@PathVariable Integer id, Model model) {
 
         Optional<Product> optionalProduct = productService.findById(id);
-        if(optionalProduct.isPresent()){
+        if (optionalProduct.isPresent()) {
             model.addAttribute("isNew", false);
             model.addAttribute("product", optionalProduct.get());
             model.addAttribute("productId", id);
             return "editProduct";
-        }else{
+        } else {
             return "redirect:/products";
         }
     }
 
-    @PostMapping(value = "/editProduct/{id}")
-    public String updateProduct(Integer productId, Product product) {
-       productService.update(productId);
-       productService.create(product);
+    @PostMapping(value = "/editProduct/{categoryId}")
+    public final String updateProduct(Product product, @PathVariable("categoryId") Integer categoryId) {
+        product.setCategory(new Category(categoryId));
+        productService.create(product);
         return "redirect:/products";
     }
 

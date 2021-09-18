@@ -7,11 +7,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="web-app" />
+        <module name="service" />
+        <module name="service-rest" />
+        <module name="rest-app" />
         <module name="model" />
         <module name="repository" />
-        <module name="service" />
-        <module name="test-database" />
+        <module name="service-api" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="test-database" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
