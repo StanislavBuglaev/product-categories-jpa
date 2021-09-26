@@ -23,7 +23,7 @@ This is sample web application.
 
 ### Requirements
 
-* JDK 8
+* JDK 11
 * Apache Maven
 
 ### Build application:
