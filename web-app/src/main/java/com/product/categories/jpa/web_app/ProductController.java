@@ -40,7 +40,7 @@ public class ProductController {
     @PostMapping(value = "/addProduct/{categoryId}")
     public String addProduct(Product product, @PathVariable("categoryId") Integer categoryId) {
         product.setCategory(new Category(categoryId));
-        productService.create(product);
+        productService.createOrUpdate(product);
         return "redirect:/categories";
     }
 
@@ -61,7 +61,7 @@ public class ProductController {
     @PostMapping(value = "/editProduct/{categoryId}")
     public final String updateProduct(Product product, @PathVariable("categoryId") Integer categoryId) {
         product.setCategory(new Category(categoryId));
-        productService.create(product);
+        productService.createOrUpdate(product);
         return "redirect:/products";
     }
 

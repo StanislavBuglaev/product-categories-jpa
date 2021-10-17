@@ -83,10 +83,6 @@ class CategoryControllerIT {
     }
 
     @Test
-    void updateCategory() {
-    }
-
-    @Test
     void deleteCategory() throws Exception {
         Category categoryTest = categoryService.create(new Category());
         assertTrue(categoryTest.getCategoryId() == 1);
@@ -125,17 +121,6 @@ class CategoryControllerIT {
                             .content(json)
                             .accept(MediaType.APPLICATION_JSON)
                     ).andExpect(status().isCreated())
-                            .andReturn().getResponse();
-            return objectMapper.readValue(response.getContentAsString(), Category.class);
-        }
-
-        public Category update(Category category) throws Exception {
-            MockHttpServletResponse response =
-                    mockMvc.perform(put(CATEGORIES_ENDPOINT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(category))
-                            .accept(MediaType.APPLICATION_JSON)
-                    ).andExpect(status().isOk())
                             .andReturn().getResponse();
             return objectMapper.readValue(response.getContentAsString(), Category.class);
         }

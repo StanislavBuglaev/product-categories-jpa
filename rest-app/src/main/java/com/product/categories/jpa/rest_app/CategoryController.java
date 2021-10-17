@@ -47,7 +47,7 @@ public class CategoryController {
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
 
         LOGGER.debug("createCategory({})", category);
-        Category categoryResult = categoryService.create(category);
+        Category categoryResult = categoryService.createOrUpdate(category);
         return new ResponseEntity<>(categoryResult, HttpStatus.CREATED);
     }
 
@@ -55,7 +55,7 @@ public class CategoryController {
     public ResponseEntity<Category> updateCategory(Category category) {
 
         LOGGER.debug("updateCategory({})", category);
-        Category categoryResult = categoryService.create(category);
+        Category categoryResult = categoryService.createOrUpdate(category);
         return new ResponseEntity<>(categoryResult, HttpStatus.OK);
     }
 

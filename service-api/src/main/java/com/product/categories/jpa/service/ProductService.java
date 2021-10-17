@@ -10,9 +10,7 @@ public interface ProductService {
 
     Optional<Product> findById(Integer id);
 
-    Product create(Product product);
-
-    Product update(Integer id);
+    Product createOrUpdate(Product product);
 
     void delete(Integer id);
 }

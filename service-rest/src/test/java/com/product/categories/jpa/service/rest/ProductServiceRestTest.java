@@ -90,7 +90,7 @@ public class ProductServiceRestTest {
                         .body(mapper.writeValueAsString(product))
                 );
         // when
-        Product productResult = productService.create(product);
+        Product productResult = productService.createOrUpdate(product);
 
         // then
         mockServer.verify();
@@ -135,10 +135,10 @@ public class ProductServiceRestTest {
         product.setProductPrice(200.6);
 
         mockServer.expect(ExpectedCount.once(), requestTo(new URI(PRODUCTS_URL)))
-                .andExpect(method(HttpMethod.PUT))
+                .andExpect(method(HttpMethod.POST))
                 .andRespond(withStatus(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(mapper.writeValueAsString("1"))
+                        .body(mapper.writeValueAsString(product))
                 );
 
         mockServer.expect(ExpectedCount.once(), requestTo(new URI(PRODUCTS_URL + "/" + id)))
@@ -149,7 +149,7 @@ public class ProductServiceRestTest {
                 );
 
         // when
-        Product result = productService.create(product);
+        Product result = productService.createOrUpdate(product);
         Optional<Product> updatedProductOptional = productService.findById(id);
 
         // then

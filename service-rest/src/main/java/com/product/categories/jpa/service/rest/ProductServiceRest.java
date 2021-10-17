@@ -42,20 +42,10 @@ public class ProductServiceRest implements ProductService {
     }
 
     @Override
-    public Product create(Product product) {
+    public Product createOrUpdate(Product product) {
         LOGGER.debug("create({})", product);
         ResponseEntity responseEntity = restTemplate.postForEntity(url, product, Product.class);
         return (Product) responseEntity.getBody();
-    }
-
-    @Override
-    public Product update(Integer id) {
-        LOGGER.debug("update({})", id);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<Product> entity = new HttpEntity<>(findById(id).get(), headers);
-        ResponseEntity<Product> result = restTemplate.exchange(url, HttpMethod.PUT, entity, Product.class);
-        return result.getBody();
     }
 
     @Override

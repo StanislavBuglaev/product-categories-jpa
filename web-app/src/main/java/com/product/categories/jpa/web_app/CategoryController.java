@@ -3,7 +3,6 @@ package com.product.categories.jpa.web_app;
 
 import com.product.categories.jpa.entity.Category;
 import com.product.categories.jpa.service.CategoryService;
-import com.product.categories.jpa.service.rest.CategoryServiceRest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +40,7 @@ public class CategoryController {
 
     @PostMapping(value = "/addCategory")
     public final String addCategory(Category category) {
-        categoryService.create(category);
+        categoryService.createOrUpdate(category);
         return "redirect:/categories";
     }
 
@@ -61,7 +60,7 @@ public class CategoryController {
 
     @PostMapping(value = "/editCategory/{id}")
     public final String updateCategory(Category category) {
-            categoryService.create(category);
+            categoryService.createOrUpdate(category);
             return "redirect:/categories";
         }
 

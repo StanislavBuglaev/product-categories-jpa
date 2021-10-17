@@ -45,7 +45,7 @@ public class ProductController {
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
 
         LOGGER.debug("createProduct({})", product);
-        Product productResult = productService.create(product);
+        Product productResult = productService.createOrUpdate(product);
         return new ResponseEntity<>(productResult, HttpStatus.CREATED);
     }
 
@@ -53,7 +53,7 @@ public class ProductController {
     public ResponseEntity<Product> updateProduct(Product product) {
 
         LOGGER.debug("updateProduct({})", product);
-        Product productResult = productService.create(product);
+        Product productResult = productService.createOrUpdate(product);
         return new ResponseEntity<>(productResult, HttpStatus.OK);
     }
 

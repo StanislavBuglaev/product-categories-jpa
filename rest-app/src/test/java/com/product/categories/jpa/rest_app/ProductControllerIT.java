@@ -83,10 +83,6 @@ public class ProductControllerIT {
     }
 
     @Test
-    void updateProduct() {
-    }
-
-    @Test
     void deleteProduct() throws Exception {
         Product productTest = productService.create(new Product());
         assertTrue(productTest.getProductId() == 1);
@@ -125,17 +121,6 @@ public class ProductControllerIT {
                             .content(json)
                             .accept(MediaType.APPLICATION_JSON)
                     ).andExpect(status().isCreated())
-                            .andReturn().getResponse();
-            return objectMapper.readValue(response.getContentAsString(), Product.class);
-        }
-
-        public Product update(Product product) throws Exception {
-            MockHttpServletResponse response =
-                    mockMvc.perform(put(PRODUCTS_ENDPOINT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(product))
-                            .accept(MediaType.APPLICATION_JSON)
-                    ).andExpect(status().isOk())
                             .andReturn().getResponse();
             return objectMapper.readValue(response.getContentAsString(), Product.class);
         }

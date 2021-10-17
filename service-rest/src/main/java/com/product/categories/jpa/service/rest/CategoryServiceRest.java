@@ -42,20 +42,10 @@ public class CategoryServiceRest implements CategoryService {
     }
 
     @Override
-    public Category create(Category category) {
+    public Category createOrUpdate(Category category) {
         LOGGER.debug("create({})", category);
         ResponseEntity responseEntity = restTemplate.postForEntity(url, category, Category.class);
         return (Category) responseEntity.getBody();
-    }
-
-    @Override
-    public Category update(Integer id) {
-        LOGGER.debug("update({})", id);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<Category> entity = new HttpEntity<>(findById(id).get(), headers);
-        ResponseEntity<Category> result = restTemplate.exchange(url, HttpMethod.PUT, entity, Category.class);
-        return result.getBody();
     }
 
     @Override

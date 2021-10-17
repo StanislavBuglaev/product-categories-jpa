@@ -89,7 +89,7 @@ public class CategoryServiceRestTest {
                         .body(mapper.writeValueAsString(category))
                 );
         // when
-        Category categoryResult = categoryService.create(category);
+        Category categoryResult = categoryService.createOrUpdate(category);
 
         // then
         mockServer.verify();
@@ -132,10 +132,10 @@ public class CategoryServiceRestTest {
         category.setCategoryName("Random2");
 
         mockServer.expect(ExpectedCount.once(), requestTo(new URI(CATEGORIES_URL)))
-                .andExpect(method(HttpMethod.PUT))
+                .andExpect(method(HttpMethod.POST))
                 .andRespond(withStatus(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(mapper.writeValueAsString("1"))
+                        .body(mapper.writeValueAsString(category))
                 );
 
         mockServer.expect(ExpectedCount.once(), requestTo(new URI(CATEGORIES_URL + "/" + id)))
@@ -146,7 +146,7 @@ public class CategoryServiceRestTest {
                 );
 
         // when
-        Category result = categoryService.create(category);
+        Category result = categoryService.createOrUpdate(category);
         Optional<Category> updatedCategoryOptional = categoryService.findById(id);
 
         // then

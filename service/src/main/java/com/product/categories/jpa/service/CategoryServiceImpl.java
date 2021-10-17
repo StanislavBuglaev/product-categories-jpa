@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryServiceImpl {
+public class CategoryServiceImpl implements CategoryService{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryServiceImpl.class);
 
@@ -22,29 +22,27 @@ public class CategoryServiceImpl {
         this.categoryRepository = categoryRepository;
     }
 
+    @Override
     public List<Category> findAll() {
         LOGGER.trace("findAll()");
         return categoryRepository.findAll();
     }
 
+    @Override
     public Optional<Category> findById(Integer categoryId) {
         LOGGER.debug("findById(id:{})", categoryId);
         return categoryRepository.findById(categoryId);
     }
 
-
-    public Category create(Category category) {
-        LOGGER.debug("create(product:{})", category);
+    @Override
+    public Category createOrUpdate(Category category) {
+        LOGGER.debug("create(category:{})", category);
         return categoryRepository.save(category);
     }
 
-    public Category update(Integer categoryId) {
-        LOGGER.debug("update(product:{})", categoryId);
-        return categoryRepository.findById(categoryId).get();
-    }
-
+    @Override
     public void delete(Integer categoryId) {
-        LOGGER.debug("delete(productId:{})", categoryId);
+        LOGGER.debug("delete(categoryId:{})", categoryId);
         categoryRepository.deleteById(categoryId);
     }
 

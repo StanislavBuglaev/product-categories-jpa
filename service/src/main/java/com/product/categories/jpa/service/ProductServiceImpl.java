@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductServiceImpl {
+public class ProductServiceImpl implements ProductService{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
 
@@ -35,14 +35,9 @@ public class ProductServiceImpl {
         return productRepository.findById(productId);
     }
 
-    public Product create(Product product) {
+    public Product createOrUpdate(Product product) {
         LOGGER.debug("create(product:{})", product);
         return productRepository.save(product);
-    }
-
-    public Product update(Integer productId) {
-        LOGGER.debug("update(product:{})", productId);
-        return productRepository.findById(productId).get();
     }
 
     public void delete(Integer productId) {
