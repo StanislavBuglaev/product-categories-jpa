@@ -28,6 +28,11 @@ public class Category {
     public Category() {
     }
 
+    public Category(Integer categoryId, String categoryName) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+    }
+
     public Category(Integer categoryId) {
         this.categoryId = categoryId;
     }

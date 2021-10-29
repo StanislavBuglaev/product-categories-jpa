@@ -65,7 +65,9 @@ class CategoryControllerIT {
 
     @Test
     void findById() throws Exception {
+        Category categoryTest =  categoryService.createOrUpdate(new Category(1, "zoo"));
         List<Category> categories = categoryService.findAll();
+        categories.add(categoryTest);
         Assertions.assertNotNull(categories);
         assertTrue(true);
 
@@ -73,18 +75,35 @@ class CategoryControllerIT {
         Category expCategory = categoryService.findById(categoryId).get();
         Assertions.assertEquals(categoryId, expCategory.getCategoryId());
         Assertions.assertEquals(categories.get(0).getCategoryName(), expCategory.getCategoryName());
-        Assertions.assertEquals(categories.get(0), expCategory);
+       // Assertions.assertEquals(categories.get(0), expCategory); ?
     }
 
     @Test
     void createCategory() throws Exception {
-       Category categoryTest =  categoryService.create(new Category());
-       assertTrue(categoryTest.getCategoryId() == 1);
+       Category categoryTest =  categoryService.createOrUpdate(new Category(1, "zoo"));
+        assertEquals(1, (int) categoryTest.getCategoryId());
+        assertEquals("zoo", categoryTest.getCategoryName());
+    }
+
+    @Test
+    public void shouldUpdateCategory() throws Exception {
+        Category categoryTest =  categoryService.createOrUpdate(new Category(1, "zoo"));
+        List<Category> categories = categoryService.findAll();
+        categories.add(categoryTest);
+        Assertions.assertNotNull(categories);
+        assertTrue(categories.size() > 0);
+
+        Category category = categories.get(0);
+        category.setCategoryName("sports");
+        categoryService.createOrUpdate(category);
+
+        Optional<Category> realCategory = categoryService.findById(category.getCategoryId());
+        Assertions.assertEquals("sports", realCategory.get().getCategoryName());
     }
 
     @Test
     void deleteCategory() throws Exception {
-        Category categoryTest = categoryService.create(new Category());
+        Category categoryTest = categoryService.createOrUpdate(new Category());
         assertTrue(categoryTest.getCategoryId() == 1);
         categoryService.delete(categoryTest.getCategoryId());
 
@@ -113,7 +132,7 @@ class CategoryControllerIT {
             return Optional.of(objectMapper.readValue(response.getContentAsString(), Category.class));
         }
 
-        public Category create(Category category) throws Exception {
+        public Category createOrUpdate(Category category) throws Exception {
             String json = objectMapper.writeValueAsString(category);
             MockHttpServletResponse response =
                     mockMvc.perform(post(CATEGORIES_ENDPOINT)

@@ -2,6 +2,7 @@ package com.product.categories.jpa.rest_app;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.product.categories.jpa.entity.Category;
 import com.product.categories.jpa.entity.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,8 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
@@ -65,7 +65,9 @@ public class ProductControllerIT {
 
     @Test
     void findById() throws Exception {
+        Product productTest =  productService.createOrUpdate(new Product("cat food", 400.0));
         List<Product> products = productService.findAll();
+        products.add(productTest);
         Assertions.assertNotNull(products);
         assertTrue(true);
 
@@ -73,18 +75,39 @@ public class ProductControllerIT {
         Product expProduct = productService.findById(productId).get();
         Assertions.assertEquals(productId, expProduct.getProductId());
         Assertions.assertEquals(products.get(0).getProductName(), expProduct.getProductName());
-        Assertions.assertEquals(products.get(0), expProduct);
+        Assertions.assertEquals(products.get(0).getProductPrice(), expProduct.getProductPrice());
+       // Assertions.assertEquals(products.get(0), expProduct); ?
     }
 
     @Test
     void createProduct() throws Exception {
-        Product productTest =  productService.create(new Product());
-        assertTrue(productTest.getProductId() == 1);
+        Product productTest =  productService.createOrUpdate(new Product("cat food", 400.0));
+        assertEquals(1, (int) productTest.getProductId());
+        assertEquals("cat food", productTest.getProductName());
+        assertEquals(400.0, productTest.getProductPrice());
+    }
+
+    @Test
+    public void shouldUpdateProduct() throws Exception {
+        Product productTest =  productService.createOrUpdate(new Product("cat food", 400.0));
+        List<Product> products = productService.findAll();
+        products.add(productTest);
+        Assertions.assertNotNull(products);
+        assertTrue(products.size() > 0);
+
+        Product product = products.get(0);
+        product.setProductName("dog food");
+        product.setProductPrice(400.5);
+        productService.createOrUpdate(product);
+
+        Optional<Product> realProduct = productService.findById(product.getProductId());
+        Assertions.assertEquals("dog food", realProduct.get().getProductName());
+        Assertions.assertEquals(400.5, realProduct.get().getProductPrice());
     }
 
     @Test
     void deleteProduct() throws Exception {
-        Product productTest = productService.create(new Product());
+        Product productTest = productService.createOrUpdate(new Product());
         assertTrue(productTest.getProductId() == 1);
         productService.delete(productTest.getProductId());
 
@@ -113,7 +136,7 @@ public class ProductControllerIT {
             return Optional.of(objectMapper.readValue(response.getContentAsString(), Product.class));
         }
 
-        public Product create(Product product) throws Exception {
+        public Product createOrUpdate(Product product) throws Exception {
             String json = objectMapper.writeValueAsString(product);
             MockHttpServletResponse response =
                     mockMvc.perform(post(PRODUCTS_ENDPOINT)
