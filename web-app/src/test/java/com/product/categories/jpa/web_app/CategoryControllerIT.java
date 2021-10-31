@@ -149,8 +149,25 @@ class CategoryControllerIT {
 
     @Test
     public void shouldUpdateCategoryAfterEdit() throws Exception {
+        mockServer.expect(ExpectedCount.once(), requestTo(new URI(CATEGORIES_URL)))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withStatus(HttpStatus.OK)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body("1")
+                );
+        String testName = "zoo";
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/editCategory/1")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("categoryId", "1")
+                        .param("categoryName", testName)
+        ).andExpect(status().isFound())
+                .andExpect(view().name("redirect:/categories"))
+                .andExpect(redirectedUrl("/categories"));
 
+        mockServer.verify();
     }
+
 
     @Test
     public void shouldDeleteCategory() throws Exception {
