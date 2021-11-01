@@ -26,6 +26,10 @@ public class Product {
     public Product() {
     }
 
+    public Product(Integer productId) {
+        this.productId = productId;
+    }
+
     public Product(Integer productId, String productName, Double productPrice) {
         this.productId = productId;
         this.productName = productName;
